@@ -1,13 +1,15 @@
 from functools import lru_cache
 from pathlib import Path
 
-
 from pydantic import Field, PositiveInt, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from Cryptodome.PublicKey import RSA
 
 
 class Settings(BaseSettings):
+    def __init__(self, **kw_args) -> None:
+        super.__init__(**kw_args)
+
     model_config = SettingsConfigDict(
         # 本地环境变量文件
         env_file=".env",
@@ -57,7 +59,7 @@ class Settings(BaseSettings):
         }
 
     # 数据库参数
-    orm_url: str = "postgresql+asyncpg://postgres:password@localhost:5432/schema"
+    orm_url: str = "postgresql+asyncpg://postgres:password@host/schema"
     orm_echo: bool = False
     orm_pool_recycle: PositiveInt = 3600
 
@@ -70,14 +72,13 @@ class Settings(BaseSettings):
         }
 
     # JWT参数配置
-    jwt_key: SecretStr = SecretStr(
-        "Z79m30/nN9gGJSWbVaFDQIesXMVxnr38O1n91NmzPG4=")
+    jwt_key: SecretStr
     jwt_algorithm: str = "HS256"
     access_token_expire_min: PositiveInt = 60*24*7
     # refresh_token_expire_min: PositiveInt = 60*24*7
 
     # AES Key配置
-    aes_ecb_key: SecretStr = SecretStr("j5TLpq7N1ydtZevTWOxhDw==")
+    aes_ecb_key: SecretStr
 
     # 用于密码传输解密用的私钥地址
     password_sk_path: str = "private.pem"

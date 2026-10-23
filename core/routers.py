@@ -7,6 +7,6 @@ from biz.auth.api import api as auth_api
 routers = APIRouter()
 for router, prefix, tags in [
     (auth_api, "/auth", ["身份认证"]),
-    (account_api, "/account", ["账号服务"]),
+    (account_api, "/account", ["账号管理"]),
 ]:
     routers.include_router(router, prefix=prefix, tags=tags)  # type:ignore
