@@ -8,7 +8,7 @@ from Cryptodome.PublicKey import RSA
 
 class Settings(BaseSettings):
     def __init__(self, **kw_args) -> None:
-        super.__init__(**kw_args)
+        super().__init__(**kw_args)
 
     model_config = SettingsConfigDict(
         # 本地环境变量文件
