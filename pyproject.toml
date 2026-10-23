@@ -1,0 +1,15 @@
+[project]
+name = "iam-api"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "asyncpg>=0.32.0",
+    "fastapi>=0.146.0",
+    "greenlet>=3.5.6",
+    "psycopg2-binary>=2.9.13",
+    "pydantic-settings>=2.16.0",
+    "python-multipart>=0.0.32",
+    "really-good-things>=0.2.8",
+    "sqlalchemy>=2.1.5",
+    "uvicorn>=0.54.0",
+]

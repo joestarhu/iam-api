@@ -219,8 +219,9 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Private Key
+# 公钥与秘钥
 private.pem
+public.pem
 
 # MacOS ignore file
 .DS_Store
