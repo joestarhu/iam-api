@@ -101,6 +101,7 @@ class AccountService:
             nickname=params.nickname,
             avatar_url=params.avatar_url,
             account_status=params.account_status,
+            email=email,
             phone_enc=phone_enc,
             password_hash=password_hash,
             created_by=actor.account_uuid,
@@ -151,7 +152,7 @@ class AccountService:
             actor.session,
             stmt,
             pagination,
-            order_by_args=[ta.created_at]
+            order_by_args=[ta.created_at.desc()]
         )
 
         # 用phoneMasked替代phone_enc

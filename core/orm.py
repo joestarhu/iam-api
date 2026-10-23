@@ -87,27 +87,23 @@ class ORM:
         order_by_args: list | None = None,
         schema: Type[T] = dict
     ) -> PaginationData[T]:
-        page_num = pagination.page_num
-        page_size = pagination.page_size
-        page_stmt = stmt
-
-        data = PaginationData(page_size=page_size)
+        data = PaginationData(**pagination.model_dump())
 
         # 获取数据总数和页面总数
-        data.total_items = await ORM.counts(session, page_stmt)
-        data.total_pages = max(1, ceil(data.total_items / page_size))
-        page_mum = min(1, min(data.total_pages, page_num))
+        data.total_items = await ORM.counts(session, stmt)
+
+        data.total_pages = max(1, ceil(data.total_items / data.page_size))
+        data.page_num = max(1, min(data.total_pages, data.page_num))
 
         # 没有数据
         if data.total_items == 0:
             return data
 
         # 排序
-        if order_by_args:
-            page_stmt = stmt.order_by(*order_by_args)
+        page_stmt = stmt.order_by(*order_by_args) if order_by_args else stmt
 
-        offset = (page_mum-1) * page_size
-        page_stmt = page_stmt.offset(offset).limit(page_size)
+        offset = (data.page_num-1) * data.page_size
+        page_stmt = page_stmt.offset(offset).limit(data.page_size)
 
         data.items = await ORM.all(session, page_stmt, schema)
 
